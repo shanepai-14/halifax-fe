@@ -5,8 +5,10 @@ import Loadable from 'components/Loadable';
 import Dashboard from 'layout/Dashboard';
 
 
+
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
+const SalesPage = Loadable(lazy(() => import('pages/sales/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -20,12 +22,8 @@ const MainRoutes = {
     },
     {
       path: 'dashboard',
-      children: [
-        {
-          path: 'default',
           element: <DashboardDefault />
-        }
-      ]
+     
     },
     {
       path: 'inventory',
@@ -33,7 +31,7 @@ const MainRoutes = {
     },
     {
       path: 'sales',
-      element: <SamplePage />
+      element: <SalesPage />
     },
 
   ]

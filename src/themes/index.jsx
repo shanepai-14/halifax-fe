@@ -46,12 +46,13 @@ export default function ThemeCustomization({ children }) {
     [theme, themeTypography, themeCustomShadows]
   );
 
+  // Create a theme and avoid direct mutation by spreading into a new object
   const themes = createTheme(themeOptions);
-  themes.components = componentsOverride(themes);
+  const updatedThemes = { ...themes, components: componentsOverride(themes) };
 
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes}>
+      <ThemeProvider theme={updatedThemes}>
         <CssBaseline />
         {children}
       </ThemeProvider>
