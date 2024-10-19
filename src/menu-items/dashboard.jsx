@@ -15,7 +15,7 @@ const dashboard = {
       id: 'dashboard',
       title: 'Dashboard',
       type: 'item',
-      url: '/dashboard',
+      url: '/app/dashboard',
       icon: DashboardOutlined,
       breadcrumbs: false
     },
@@ -23,7 +23,7 @@ const dashboard = {
       id: 'sales',
       title: 'Sales',
       type: 'item',
-      url: '/sales',
+      url: '/app/sales',
       icon: ShoppingCartOutlined ,
       breadcrumbs: false
     },
@@ -31,7 +31,7 @@ const dashboard = {
       id: 'inventory',
       title: 'Inventory',
       type: 'item',
-      url: '/inventory',
+      url: '/app/inventory',
       icon: DropboxOutlined ,
       breadcrumbs: false
     },
@@ -39,7 +39,7 @@ const dashboard = {
       id: 'product',
       title: 'Product',
       type: 'item',
-      url: '/product',
+      url: '/app/product',
       icon: ProductOutlined  ,
       breadcrumbs: false
     },
@@ -47,7 +47,7 @@ const dashboard = {
       id: 'supplier',
       title: 'Supplier',
       type: 'item',
-      url: '/supplier',
+      url: '/app/supplier',
       icon: AreaChartOutlined ,
       breadcrumbs: false
     },
@@ -55,7 +55,7 @@ const dashboard = {
       id: 'account',
       title: 'Account',
       type: 'item',
-      url: '/account',
+      url: '/app/account',
       icon: UserOutlined  ,
       breadcrumbs: false
     },

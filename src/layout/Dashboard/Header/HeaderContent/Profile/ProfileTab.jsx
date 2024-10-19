@@ -51,7 +51,7 @@ export default function ProfileTab() {
         <ListItemText primary="Billing" />
       </ListItemButton> */}
       <ListItemButton selected={selectedIndex === 2}  component={RouterLink}
-                          to="/login">
+                          to="/">
         <ListItemIcon  >
           <LogoutOutlined />
         </ListItemIcon>

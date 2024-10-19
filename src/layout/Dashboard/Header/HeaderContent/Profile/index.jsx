@@ -135,7 +135,7 @@ export default function Profile() {
                         <Tooltip title="Logout">
                           <IconButton size="large" sx={{ color: 'text.primary' }}
                           component={RouterLink}
-                          to="/login"
+                          to="/"
                           >
                             <LogoutOutlined />
                           </IconButton>

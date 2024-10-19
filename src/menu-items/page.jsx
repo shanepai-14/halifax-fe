@@ -12,7 +12,7 @@ const pages = {
       id: 'login1',
       title: 'Login',
       type: 'item',
-      url: '/login',
+      url: '/',
       icon: LoginOutlined,
   
     },
