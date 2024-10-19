@@ -206,7 +206,7 @@ const HalifaxSalesPage = () => {
       <Box>
       <Button variant="contained" 
       component={RouterLink}
-      to="/sales/newOrder" color="error" sx={{mr:1}} startIcon={<PlusOutlined />} >
+      to="/app/sales/newOrder" color="error" sx={{mr:1}} startIcon={<PlusOutlined />} >
         New Order
       </Button>
       <Button variant="contained" color="info" startIcon={<PlusOutlined />} onClick={handleOpenCustomerModal}>
