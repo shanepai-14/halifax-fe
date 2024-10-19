@@ -7,9 +7,15 @@ import Dashboard from 'layout/Dashboard';
 
 
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
-const SamplePage = Loadable(lazy(() => import('pages/extra-pages/sample-page')));
 const SalesPage = Loadable(lazy(() => import('pages/sales/index')));
-
+const NewOrder = Loadable(lazy(() => import('pages/sales/newOrder')));
+const Sales = Loadable(lazy(() => import('pages/sales/sales')));
+const InventoryPage = Loadable(lazy(() => import('pages/inventory/index')));
+const Inventory = Loadable(lazy(() => import('pages/inventory/inventory')));
+const SupplierPage = Loadable(lazy(() => import('pages/supplier/index')));
+const Supplier = Loadable(lazy(() => import('pages/supplier/supplier')));
+const AccountPage = Loadable(lazy(() => import('pages/account/index')));
+const Account = Loadable(lazy(() => import('pages/account/account')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -27,12 +33,49 @@ const MainRoutes = {
     },
     {
       path: 'inventory',
-      element: <SamplePage />
+      element: <InventoryPage />,
+      children: [
+        {
+          index: true,
+          element: <Inventory />
+        },
+      ]
+    },
+    {
+      path: 'supplier',
+      element: <SupplierPage />,
+      children: [
+        {
+          index: true,
+          element: <Supplier />
+        },
+      ]
     },
     {
       path: 'sales',
-      element: <SalesPage />
+      element: <SalesPage />,
+      children: [
+        {
+          index: true,
+          element: <Sales />
+        },
+        {
+          path: 'newOrder',
+          element: <NewOrder />
+        },
+      ]
     },
+    {
+      path: 'account',
+      element: <AccountPage />,
+      children: [
+        {
+          index: true,
+          element: <Account />
+        },
+      
+      ]
+    }
 
   ]
 };
