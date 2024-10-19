@@ -140,7 +140,7 @@ export default function AuthLogin({ isDemo = false }) {
                 <AnimateButton>
                   <Button
                     component={RouterLink} // Add this line to make the button a Link
-                    to="/dashboard"
+                    to="/app/dashboard"
                     disableElevation
                     disabled={isSubmitting}
                     fullWidth
