@@ -6,6 +6,6 @@ import LoginRoutes from './LoginRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
 
-const router = createBrowserRouter([MainRoutes, LoginRoutes]);
+const router = createBrowserRouter([MainRoutes, LoginRoutes,{ basename : "/halifax-fe"}]);
 
 export default router;
