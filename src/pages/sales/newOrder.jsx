@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import {
   Grid, Paper, TextField, Button, Typography, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, TablePagination, Autocomplete, Dialog,
-  DialogTitle, DialogContent, DialogActions, IconButton, Box
+  DialogTitle, DialogContent, DialogActions, IconButton, Box,
+  FormControl, InputLabel, Select, MenuItem 
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DeleteOutlined, SearchOutlined, PlusCircleOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { format, addDays } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
 // Updated mock data
 const allProducts = [
-  { id: 1, code: 'P001', name: 'Tempered Glass', price: 100, quantity: 50 },
+  { id: 1, code: 'P001', name: 'Tempered Glass', price: 100, quantity: 0 },
   { id: 2, code: 'P002', name: 'Aluminum Frame', price: 50, quantity: 100 },
   { id: 3, code: 'P003', name: 'Wooden Door', price: 200, quantity: 25 },
   { id: 4, code: 'P004', name: 'Steel Reinforcement', price: 150, quantity: 40 },
@@ -68,6 +72,16 @@ const customers = [
   { id: 10, name: 'Ivy White', phone: '8899001122', address: '357 Redwood St, Seaview, USA' },
 ];
 
+const validationSchema = Yup.object().shape({
+  customer: Yup.object().nullable().required('Customer is required'),
+  phone: Yup.string().required('Phone is required'),
+  address: Yup.string().required('Address is required'),
+  salesType: Yup.string().required('Sales type is required'),
+  orderDate: Yup.date().required('Order date is required'),
+  deliveryDate: Yup.date().required('Delivery date is required').min(Yup.ref('orderDate'), 'Delivery date must be after order date'),
+});
+
+
 const NewOrderPage = () => {
   const [products, setProducts] = useState(allProducts);
   const [page, setPage] = useState(0);
@@ -80,6 +94,18 @@ const NewOrderPage = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [customerInfo, setCustomerInfo] = useState({ name: '', phone: '', address: '' });
+  const [salesType, setSalesType] = useState('');
+  const navigate = useNavigate();
+
+
+  const initialValues = {
+    customer: null,
+    phone: '',
+    address: '',
+    salesType: '',
+    orderDate: new Date(),
+    deliveryDate: addDays(new Date(), 1),
+  };
 
   useEffect(() => {
     const filteredProducts = allProducts.filter(
@@ -109,6 +135,11 @@ const NewOrderPage = () => {
     } else {
       setCustomerInfo({ name: '', phone: '', address: '' });
     }
+  };
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setSalesType(value);
+  
   };
 
   const handleAddProduct = (product) => {
@@ -157,14 +188,23 @@ const NewOrderPage = () => {
 
   const totalPrice = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const handleSubmitOrder = () => {
-    console.log({
-      customer,
-      orderDate,
-      deliveryDate,
-      items: orderItems,
-      totalPrice
-    });
+  const handleSubmitOrder = (values, { setSubmitting }) => {
+    if (orderItems.length === 0) {
+      alert('Please add at least one item to the order');
+      setSubmitting(false);
+      return;
+    }
+
+    const invoiceData = {
+      salesType: values.salesType,
+      customer: { ...values.customer, phone: values.phone, address: values.address },
+      orderDate: values.orderDate,
+      deliveryDate: values.deliveryDate,
+      orderItems,
+      totalPrice,
+      invoiceNumber: "INV-"+232323, 
+    };
+    navigate('/sales/invoice-preview', { state: { invoiceData } });
   };
 
   return (
@@ -227,46 +267,95 @@ const NewOrderPage = () => {
       <Grid item xs={12} md={6}>
         <Paper sx={{ p: 2 }}>
           <Typography variant="h6" gutterBottom>New Order</Typography>
-          <Autocomplete
-            options={customers}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => <TextField {...params} label="Customer" fullWidth />}
-            value={customer}
-            onChange={handleCustomerChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Phone"
-            value={customerInfo.phone}
-            onChange={(e) => setCustomerInfo({ ...customerInfo, phone: e.target.value })}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Address"
-            value={customerInfo.address}
-            onChange={(e) => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-            fullWidth
-            margin="normal"
-           
-          />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Box sx={{ display: 'flex', gap: 2, mb: 2 ,mt:2}}>
-              <DatePicker
-                label="Order Date"
-                value={orderDate}
-                onChange={setOrderDate}
-                renderInput={(params) => <TextField {...params} fullWidth />}
-                readOnly
-              />
-              <DatePicker
-                label="Delivery Date"
-                value={deliveryDate}
-                onChange={setDeliveryDate}
-                renderInput={(params) => <TextField {...params} fullWidth />}
-              />
-            </Box>
-          </LocalizationProvider>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmitOrder}
+          >
+            {({ errors, touched, setFieldValue, values }) => (
+              <Form>
+                <Field
+                  name="customer"
+                  component={Autocomplete}
+                  options={customers}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Customer"
+                      error={touched.customer && !!errors.customer}
+                      helperText={touched.customer && errors.customer}
+                    />
+                  )}
+                  onChange={(_, value) => {
+                    setFieldValue('customer', value);
+                    setFieldValue('phone', value ? value.phone : '');
+                    setFieldValue('address', value ? value.address : '');
+                  }}
+                />
+                <Field
+                  as={TextField}
+                  name="phone"
+                  label="Phone"
+                  fullWidth
+                  margin="normal"
+                  error={touched.phone && !!errors.phone}
+                  helperText={touched.phone && errors.phone}
+                />
+                <Field
+                  as={TextField}
+                  name="address"
+                  label="Address"
+                  fullWidth
+                  margin="normal"
+                  error={touched.address && !!errors.address}
+                  helperText={touched.address && errors.address}
+                />
+                <FormControl fullWidth error={touched.salesType && !!errors.salesType}>
+                  <InputLabel>Sales Type</InputLabel>
+                  <Field
+                    as={Select}
+                    name="salesType"
+                    label="Sales Type"
+                  >
+                    <MenuItem value="sales-invoice">Sales Invoice</MenuItem>
+                    <MenuItem value="quotation-project">Quotation/Project</MenuItem>
+                  </Field>
+                  {touched.salesType && errors.salesType && (
+                    <Typography color="error" variant="caption">{errors.salesType}</Typography>
+                  )}
+                </FormControl>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <Box sx={{ display: 'flex', gap: 2, mb: 2, mt: 2 }}>
+                    <DatePicker
+                      label="Order Date"
+                      value={values.orderDate}
+                      onChange={(date) => setFieldValue('orderDate', date)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          error={touched.orderDate && !!errors.orderDate}
+                          helperText={touched.orderDate && errors.orderDate}
+                        />
+                      )}
+                      readOnly
+                    />
+                    <DatePicker
+                      label="Delivery Date"
+                      value={values.deliveryDate}
+                      onChange={(date) => setFieldValue('deliveryDate', date)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          error={touched.deliveryDate && !!errors.deliveryDate}
+                          helperText={touched.deliveryDate && errors.deliveryDate}
+                        />
+                      )}
+                    />
+                  </Box>
+                </LocalizationProvider>
           <Typography variant="h6" gutterBottom>Order Items</Typography>
           <TableContainer>
             <Table size="small">
@@ -316,14 +405,17 @@ const NewOrderPage = () => {
             Total Price: ₱{totalPrice}
           </Typography>
           <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmitOrder}
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Submit Order
-          </Button>
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ mt: 2 }}
+                >
+                  Submit Order
+                </Button>
+              </Form>
+            )}
+          </Formik>
         </Paper>
       </Grid>
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
