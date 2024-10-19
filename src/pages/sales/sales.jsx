@@ -13,36 +13,36 @@ import CustomerCreationModal from './CustomerCreationModal';
 import { Link as RouterLink } from 'react-router-dom';
 // Updated sample data
 const initialSalesData = [
-    { id: 1, invoiceNumber: 'INV-001', customer: 'John Doe', product: 'Tempered Glass', quantity: 150, revenue: 15000, dateOrder: '2024-03-01', dateDelivery: '2024-03-05', customerType: 'delivery' },
-    { id: 2, invoiceNumber: 'INV-002', customer: 'Jane Smith', product: 'Aluminum Frames', quantity: 200, revenue: 10000, dateOrder: '2024-03-02', dateDelivery: '2024-03-07', customerType: 'walk-in' },
-    { id: 3, invoiceNumber: 'INV-003', customer: 'Bob Johnson', product: 'Glass Shower Doors', quantity: 75, revenue: 22500, dateOrder: '2024-03-03', dateDelivery: '2024-03-10', customerType: 'delivery' },
-    { id: 4, invoiceNumber: 'INV-004', customer: 'Alice Brown', product: 'Mirrors', quantity: 100, revenue: 5000, dateOrder: '2024-03-04', dateDelivery: '2024-03-06', customerType: 'walk-in' },
-    { id: 5, invoiceNumber: 'INV-005', customer: 'Charlie Davis', product: 'Window Panes', quantity: 300, revenue: 9000, dateOrder: '2024-03-05', dateDelivery: '2024-03-12', customerType: 'delivery' },
-    { id: 6, invoiceNumber: 'INV-006', customer: 'Eve Wilson', product: 'Glass Tabletops', quantity: 50, revenue: 7500, dateOrder: '2024-03-06', dateDelivery: '2024-03-09', customerType: 'walk-in' },
-    { id: 7, invoiceNumber: 'INV-007', customer: 'Frank Miller', product: 'Aluminum Siding', quantity: 180, revenue: 13500, dateOrder: '2024-03-07', dateDelivery: '2024-03-14', customerType: 'delivery' },
-    { id: 8, invoiceNumber: 'INV-008', customer: 'Grace Lee', product: 'Glass Partitions', quantity: 25, revenue: 18750, dateOrder: '2024-03-08', dateDelivery: '2024-03-15', customerType: 'delivery' },
-    { id: 9, invoiceNumber: 'INV-009', customer: 'Henry Taylor', product: 'Tempered Glass', quantity: 100, revenue: 10000, dateOrder: '2024-03-09', dateDelivery: '2024-03-11', customerType: 'walk-in' },
-    { id: 10, invoiceNumber: 'INV-010', customer: 'Ivy Moore', product: 'Aluminum Frames', quantity: 150, revenue: 7500, dateOrder: '2024-03-10', dateDelivery: '2024-03-13', customerType: 'delivery' },
-    { id: 11, invoiceNumber: 'INV-011', customer: 'Jack Robinson', product: 'Glass Shower Doors', quantity: 60, revenue: 18000, dateOrder: '2024-03-11', dateDelivery: '2024-03-18', customerType: 'delivery' },
-    { id: 12, invoiceNumber: 'INV-012', customer: 'Karen White', product: 'Mirrors', quantity: 80, revenue: 4000, dateOrder: '2024-03-12', dateDelivery: '2024-03-14', customerType: 'walk-in' },
-    { id: 13, invoiceNumber: 'INV-013', customer: 'Liam Harris', product: 'Window Panes', quantity: 250, revenue: 7500, dateOrder: '2024-03-13', dateDelivery: '2024-03-20', customerType: 'delivery' },
-    { id: 14, invoiceNumber: 'INV-014', customer: 'Mia Clark', product: 'Glass Tabletops', quantity: 40, revenue: 6000, dateOrder: '2024-03-14', dateDelivery: '2024-03-17', customerType: 'walk-in' },
-    { id: 15, invoiceNumber: 'INV-015', customer: 'Noah Lewis', product: 'Aluminum Siding', quantity: 200, revenue: 15000, dateOrder: '2024-03-15', dateDelivery: '2024-03-22', customerType: 'delivery' },
-    { id: 16, invoiceNumber: 'INV-016', customer: 'Olivia Walker', product: 'Glass Partitions', quantity: 30, revenue: 22500, dateOrder: '2024-03-16', dateDelivery: '2024-03-23', customerType: 'delivery' },
-    { id: 17, invoiceNumber: 'INV-017', customer: 'Peter Hall', product: 'Tempered Glass', quantity: 120, revenue: 12000, dateOrder: '2024-03-17', dateDelivery: '2024-03-19', customerType: 'walk-in' },
-    { id: 18, invoiceNumber: 'INV-018', customer: 'Quinn Adams', product: 'Aluminum Frames', quantity: 180, revenue: 9000, dateOrder: '2024-03-18', dateDelivery: '2024-03-21', customerType: 'delivery' },
-    { id: 19, invoiceNumber: 'INV-019', customer: 'Rachel Turner', product: 'Glass Shower Doors', quantity: 70, revenue: 21000, dateOrder: '2024-03-19', dateDelivery: '2024-03-26', customerType: 'delivery' },
-    { id: 20, invoiceNumber: 'INV-020', customer: 'Samuel Green', product: 'Mirrors', quantity: 90, revenue: 4500, dateOrder: '2024-03-20', dateDelivery: '2024-03-22', customerType: 'walk-in' },
-    { id: 21, invoiceNumber: 'INV-021', customer: 'Tara Campbell', product: 'Window Panes', quantity: 280, revenue: 8400, dateOrder: '2024-03-21', dateDelivery: '2024-03-28', customerType: 'delivery' },
-    { id: 22, invoiceNumber: 'INV-022', customer: 'Ulysses King', product: 'Glass Tabletops', quantity: 45, revenue: 6750, dateOrder: '2024-03-22', dateDelivery: '2024-03-25', customerType: 'walk-in' },
-    { id: 23, invoiceNumber: 'INV-023', customer: 'Victoria Scott', product: 'Aluminum Siding', quantity: 220, revenue: 16500, dateOrder: '2024-03-23', dateDelivery: '2024-03-30', customerType: 'delivery' },
-    { id: 24, invoiceNumber: 'INV-024', customer: 'William Baker', product: 'Glass Partitions', quantity: 35, revenue: 26250, dateOrder: '2024-03-24', dateDelivery: '2024-03-31', customerType: 'delivery' },
-    { id: 25, invoiceNumber: 'INV-025', customer: 'Xander Morris', product: 'Tempered Glass', quantity: 130, revenue: 13000, dateOrder: '2024-03-25', dateDelivery: '2024-03-27', customerType: 'walk-in' },
-    { id: 26, invoiceNumber: 'INV-026', customer: 'Yasmin Reed', product: 'Aluminum Frames', quantity: 190, revenue: 9500, dateOrder: '2024-03-26', dateDelivery: '2024-03-29', customerType: 'delivery' },
-    { id: 27, invoiceNumber: 'INV-027', customer: 'Zachary Cook', product: 'Glass Shower Doors', quantity: 80, revenue: 24000, dateOrder: '2024-03-27', dateDelivery: '2024-04-03', customerType: 'delivery' },
-    { id: 28, invoiceNumber: 'INV-028', customer: 'Abigail Ward', product: 'Mirrors', quantity: 110, revenue: 5500, dateOrder: '2024-03-28', dateDelivery: '2024-03-30', customerType: 'walk-in' },
-    { id: 29, invoiceNumber: 'INV-029', customer: 'Benjamin Ross', product: 'Window Panes', quantity: 320, revenue: 9600, dateOrder: '2024-03-29', dateDelivery: '2024-04-05', customerType: 'delivery' },
-    { id: 30, invoiceNumber: 'INV-030', customer: 'Chloe Long', product: 'Glass Tabletops', quantity: 55, revenue: 8250, dateOrder: '2024-03-30', dateDelivery: '2024-04-02', customerType: 'walk-in' }
+    { id: 1, invoiceNumber: 'INV-001', customer: 'John Doe', product: 'Tempered Glass', quantity: 150, revenue: 15000, dateOrder: '2024-03-01', dateDelivery: '2024-03-05', customerType: 'quotation/project' },
+    { id: 2, invoiceNumber: 'INV-002', customer: 'Jane Smith', product: 'Aluminum Frames', quantity: 200, revenue: 10000, dateOrder: '2024-03-02', dateDelivery: '2024-03-07', customerType: 'sales-invoice' },
+    { id: 3, invoiceNumber: 'INV-003', customer: 'Bob Johnson', product: 'Glass Shower Doors', quantity: 75, revenue: 22500, dateOrder: '2024-03-03', dateDelivery: '2024-03-10', customerType: 'quotation/project' },
+    { id: 4, invoiceNumber: 'INV-004', customer: 'Alice Brown', product: 'Mirrors', quantity: 100, revenue: 5000, dateOrder: '2024-03-04', dateDelivery: '2024-03-06', customerType: 'sales-invoice' },
+    { id: 5, invoiceNumber: 'INV-005', customer: 'Charlie Davis', product: 'Window Panes', quantity: 300, revenue: 9000, dateOrder: '2024-03-05', dateDelivery: '2024-03-12', customerType: 'quotation/project' },
+    { id: 6, invoiceNumber: 'INV-006', customer: 'Eve Wilson', product: 'Glass Tabletops', quantity: 50, revenue: 7500, dateOrder: '2024-03-06', dateDelivery: '2024-03-09', customerType: 'sales-invoice' },
+    { id: 7, invoiceNumber: 'INV-007', customer: 'Frank Miller', product: 'Aluminum Siding', quantity: 180, revenue: 13500, dateOrder: '2024-03-07', dateDelivery: '2024-03-14', customerType: 'quotation/project' },
+    { id: 8, invoiceNumber: 'INV-008', customer: 'Grace Lee', product: 'Glass Partitions', quantity: 25, revenue: 18750, dateOrder: '2024-03-08', dateDelivery: '2024-03-15', customerType: 'quotation/project' },
+    { id: 9, invoiceNumber: 'INV-009', customer: 'Henry Taylor', product: 'Tempered Glass', quantity: 100, revenue: 10000, dateOrder: '2024-03-09', dateDelivery: '2024-03-11', customerType: 'sales-invoice' },
+    { id: 10, invoiceNumber: 'INV-010', customer: 'Ivy Moore', product: 'Aluminum Frames', quantity: 150, revenue: 7500, dateOrder: '2024-03-10', dateDelivery: '2024-03-13', customerType: 'quotation/project' },
+    { id: 11, invoiceNumber: 'INV-011', customer: 'Jack Robinson', product: 'Glass Shower Doors', quantity: 60, revenue: 18000, dateOrder: '2024-03-11', dateDelivery: '2024-03-18', customerType: 'quotation/project' },
+    { id: 12, invoiceNumber: 'INV-012', customer: 'Karen White', product: 'Mirrors', quantity: 80, revenue: 4000, dateOrder: '2024-03-12', dateDelivery: '2024-03-14', customerType: 'sales-invoice' },
+    { id: 13, invoiceNumber: 'INV-013', customer: 'Liam Harris', product: 'Window Panes', quantity: 250, revenue: 7500, dateOrder: '2024-03-13', dateDelivery: '2024-03-20', customerType: 'quotation/project' },
+    { id: 14, invoiceNumber: 'INV-014', customer: 'Mia Clark', product: 'Glass Tabletops', quantity: 40, revenue: 6000, dateOrder: '2024-03-14', dateDelivery: '2024-03-17', customerType: 'sales-invoice' },
+    { id: 15, invoiceNumber: 'INV-015', customer: 'Noah Lewis', product: 'Aluminum Siding', quantity: 200, revenue: 15000, dateOrder: '2024-03-15', dateDelivery: '2024-03-22', customerType: 'quotation/project' },
+    { id: 16, invoiceNumber: 'INV-016', customer: 'Olivia Walker', product: 'Glass Partitions', quantity: 30, revenue: 22500, dateOrder: '2024-03-16', dateDelivery: '2024-03-23', customerType: 'quotation/project' },
+    { id: 17, invoiceNumber: 'INV-017', customer: 'Peter Hall', product: 'Tempered Glass', quantity: 120, revenue: 12000, dateOrder: '2024-03-17', dateDelivery: '2024-03-19', customerType: 'sales-invoice' },
+    { id: 18, invoiceNumber: 'INV-018', customer: 'Quinn Adams', product: 'Aluminum Frames', quantity: 180, revenue: 9000, dateOrder: '2024-03-18', dateDelivery: '2024-03-21', customerType: 'quotation/project' },
+    { id: 19, invoiceNumber: 'INV-019', customer: 'Rachel Turner', product: 'Glass Shower Doors', quantity: 70, revenue: 21000, dateOrder: '2024-03-19', dateDelivery: '2024-03-26', customerType: 'quotation/project' },
+    { id: 20, invoiceNumber: 'INV-020', customer: 'Samuel Green', product: 'Mirrors', quantity: 90, revenue: 4500, dateOrder: '2024-03-20', dateDelivery: '2024-03-22', customerType: 'sales-invoice' },
+    { id: 21, invoiceNumber: 'INV-021', customer: 'Tara Campbell', product: 'Window Panes', quantity: 280, revenue: 8400, dateOrder: '2024-03-21', dateDelivery: '2024-03-28', customerType: 'quotation/project' },
+    { id: 22, invoiceNumber: 'INV-022', customer: 'Ulysses King', product: 'Glass Tabletops', quantity: 45, revenue: 6750, dateOrder: '2024-03-22', dateDelivery: '2024-03-25', customerType: 'sales-invoice' },
+    { id: 23, invoiceNumber: 'INV-023', customer: 'Victoria Scott', product: 'Aluminum Siding', quantity: 220, revenue: 16500, dateOrder: '2024-03-23', dateDelivery: '2024-03-30', customerType: 'quotation/project' },
+    { id: 24, invoiceNumber: 'INV-024', customer: 'William Baker', product: 'Glass Partitions', quantity: 35, revenue: 26250, dateOrder: '2024-03-24', dateDelivery: '2024-03-31', customerType: 'quotation/project' },
+    { id: 25, invoiceNumber: 'INV-025', customer: 'Xander Morris', product: 'Tempered Glass', quantity: 130, revenue: 13000, dateOrder: '2024-03-25', dateDelivery: '2024-03-27', customerType: 'sales-invoice' },
+    { id: 26, invoiceNumber: 'INV-026', customer: 'Yasmin Reed', product: 'Aluminum Frames', quantity: 190, revenue: 9500, dateOrder: '2024-03-26', dateDelivery: '2024-03-29', customerType: 'quotation/project' },
+    { id: 27, invoiceNumber: 'INV-027', customer: 'Zachary Cook', product: 'Glass Shower Doors', quantity: 80, revenue: 24000, dateOrder: '2024-03-27', dateDelivery: '2024-04-03', customerType: 'quotation/project' },
+    { id: 28, invoiceNumber: 'INV-028', customer: 'Abigail Ward', product: 'Mirrors', quantity: 110, revenue: 5500, dateOrder: '2024-03-28', dateDelivery: '2024-03-30', customerType: 'sales-invoice' },
+    { id: 29, invoiceNumber: 'INV-029', customer: 'Benjamin Ross', product: 'Window Panes', quantity: 320, revenue: 9600, dateOrder: '2024-03-29', dateDelivery: '2024-04-05', customerType: 'quotation/project' },
+    { id: 30, invoiceNumber: 'INV-030', customer: 'Chloe Long', product: 'Glass Tabletops', quantity: 55, revenue: 8250, dateOrder: '2024-03-30', dateDelivery: '2024-04-02', customerType: 'sales-invoice' }
   ];
 
 
@@ -185,8 +185,8 @@ const HalifaxSalesPage = () => {
             onChange={(e) => setFilterType(e.target.value)}
           >
             <MenuItem value="all">All Types</MenuItem>
-            <MenuItem value="walk-in">Walk-in</MenuItem>
-            <MenuItem value="delivery">Delivery</MenuItem>
+            <MenuItem value="sales-invoice">Sales Invoice</MenuItem>
+            <MenuItem value="quotation/project">Quotation/Project</MenuItem>
           </Select>
         </FormControl>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -232,7 +232,7 @@ const HalifaxSalesPage = () => {
               <TableCell align="right">Revenue (₱)</TableCell>
               <TableCell>Date Order</TableCell>
               <TableCell>Date Delivery</TableCell>
-              <TableCell>Customer Type</TableCell>
+              <TableCell>Sales Type</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>

@@ -17,6 +17,8 @@ const Supplier = Loadable(lazy(() => import('pages/supplier/supplier')));
 const AccountPage = Loadable(lazy(() => import('pages/account/index')));
 const Account = Loadable(lazy(() => import('pages/account/account')))
 const InvoicePreview = Loadable(lazy(() => import('pages/sales/invoicePreview')))
+const ProductPage = Loadable(lazy(() => import('pages/product/index')));
+const Product = Loadable(lazy(() => import('pages/product/product')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -77,6 +79,17 @@ const MainRoutes = {
         {
           index: true,
           element: <Account />
+        },
+      
+      ]
+    },
+    {
+      path: 'product',
+      element: <ProductPage />,
+      children: [
+        {
+          index: true,
+          element: <Product />
         },
       
       ]

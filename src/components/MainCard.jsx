@@ -11,8 +11,11 @@ import Typography from '@mui/material/Typography';
 
 // header style
 const headerSX = {
+  fontSize:20,
   p: 2.5,
-  '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' }
+  '& .MuiCardHeader-action': { m: '0px auto', alignSelf: 'center' },
+  '& .MuiCardHeader-title': {fontSize: 25}
+
 };
 
 function MainCard(
@@ -59,7 +62,7 @@ function MainCard(
     >
       {/* card header and action */}
       {!darkTitle && title && <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />}
-      {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
+      {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h1">{title}</Typography>} action={secondary} />}
 
       {/* card content */}
       {content && <CardContent sx={contentSX}>{children}</CardContent>}

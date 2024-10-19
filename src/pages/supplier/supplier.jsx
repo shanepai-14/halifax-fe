@@ -75,9 +75,6 @@ const HalifaxSupplierPage = () => {
 
   return (
     <Container maxWidth="xxl" sx={{ mt: 0, px: '0!important' }}>
-      <Typography variant="h4" gutterBottom>
-        Suppliers
-      </Typography>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <TextField
           placeholder="Search suppliers..."
@@ -104,8 +101,9 @@ const HalifaxSupplierPage = () => {
           </Button>
           <Button 
             variant="contained" 
-            color="primary" 
+            color="error" 
             startIcon={<PlusOutlined />}
+
             onClick={handleOpenAddSupplierModal}
           >
             Add Supplier

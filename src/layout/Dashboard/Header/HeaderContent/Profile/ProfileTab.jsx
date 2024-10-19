@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+import { Link as RouterLink } from 'react-router-dom';
 // assets
 import EditOutlined from '@ant-design/icons/EditOutlined';
 import ProfileOutlined from '@ant-design/icons/ProfileOutlined';
@@ -38,20 +38,21 @@ export default function ProfileTab() {
         <ListItemText primary="View Profile" />
       </ListItemButton>
 
-      <ListItemButton selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3, 'apps/profiles/account/personal')}>
+      {/* <ListItemButton selected={selectedIndex === 3} onClick={(event) => handleListItemClick(event, 3, 'apps/profiles/account/personal')}>
         <ListItemIcon>
           <ProfileOutlined />
         </ListItemIcon>
         <ListItemText primary="Social Profile" />
-      </ListItemButton>
-      <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 4, '/apps/invoice/details/1')}>
+      </ListItemButton> */}
+      {/* <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 4, '/apps/invoice/details/1')}>
         <ListItemIcon>
           <WalletOutlined />
         </ListItemIcon>
         <ListItemText primary="Billing" />
-      </ListItemButton>
-      <ListItemButton selected={selectedIndex === 2}>
-        <ListItemIcon>
+      </ListItemButton> */}
+      <ListItemButton selected={selectedIndex === 2}  component={RouterLink}
+                          to="/login">
+        <ListItemIcon  >
           <LogoutOutlined />
         </ListItemIcon>
         <ListItemText primary="Logout" />

@@ -5,7 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 // material-ui
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
@@ -16,7 +15,6 @@ import InputLabel from '@mui/material/InputLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -27,7 +25,6 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
-
 
 // ============================|| JWT - LOGIN ||============================ //
 
@@ -141,13 +138,21 @@ export default function AuthLogin({ isDemo = false }) {
               )}
               <Grid item xs={12}>
                 <AnimateButton>
-                  <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="error">
+                  <Button
+                    component={RouterLink} // Add this line to make the button a Link
+                    to="/dashboard"
+                    disableElevation
+                    disabled={isSubmitting}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    color="error"
+                  >
                     Login
                   </Button>
                 </AnimateButton>
               </Grid>
-           
-         
             </Grid>
           </form>
         )}

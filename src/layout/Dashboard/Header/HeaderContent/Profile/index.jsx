@@ -16,7 +16,7 @@ import Tabs from '@mui/material/Tabs';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
+import { Link as RouterLink } from 'react-router-dom';
 // project import
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
@@ -126,14 +126,17 @@ export default function Profile() {
                           <Stack>
                             <Typography variant="h6">John Doe</Typography>
                             <Typography variant="body2" color="text.secondary">
-                              UI/UX Designer
+                              ADMIN
                             </Typography>
                           </Stack>
                         </Stack>
                       </Grid>
                       <Grid item>
                         <Tooltip title="Logout">
-                          <IconButton size="large" sx={{ color: 'text.primary' }}>
+                          <IconButton size="large" sx={{ color: 'text.primary' }}
+                          component={RouterLink}
+                          to="/login"
+                          >
                             <LogoutOutlined />
                           </IconButton>
                         </Tooltip>

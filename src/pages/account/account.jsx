@@ -82,10 +82,7 @@ const HalifaxAccountManagementPage = () => {
   );
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Account Management
-      </Typography>
+    <Container maxWidth="xxl" sx={{ mt: 0,p:"0!important" }}>
       <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between' }}>
         <TextField
           label="Search Users"
@@ -102,6 +99,7 @@ const HalifaxAccountManagementPage = () => {
         <Button
           variant="contained"
           startIcon={<PlusOutlined />}
+          color="error"
           onClick={() => handleOpenDialog()}
         >
           Add New User
