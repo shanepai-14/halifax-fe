@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import Dashboard from 'layout/Dashboard';
-
+import MinimalLayout from 'layout/MinimalLayout';
 
 
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
@@ -19,79 +19,169 @@ const Account = Loadable(lazy(() => import('pages/account/account')))
 const InvoicePreview = Loadable(lazy(() => import('pages/sales/invoicePreview')))
 const ProductPage = Loadable(lazy(() => import('pages/product/index')));
 const Product = Loadable(lazy(() => import('pages/product/product')))
-// ==============================|| MAIN ROUTING ||============================== //
+const AuthLogin = Loadable(lazy(() => import('pages/authentication/login')));
+const AuthRegister = Loadable(lazy(() => import('pages/authentication/register')));
 
-const MainRoutes = {
+// const MainRoutes = {
+//   path: '/',
+//   element: <Dashboard />,
+//   children: [
+//     {
+//       path: 'dashboard',
+//           element: <DashboardDefault />
+     
+//     },
+//     {
+//       path: 'inventory',
+//       element: <InventoryPage />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Inventory />
+//         },
+//       ]
+//     },
+//     {
+//       path: 'supplier',
+//       element: <SupplierPage />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Supplier />
+//         },
+//       ]
+//     },
+//     {
+//       path: 'sales',
+//       element: <SalesPage />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Sales />
+//         },
+//         {
+//           path: 'newOrder',
+//           element: <NewOrder />
+//         },
+//         {
+//           path: 'invoice-preview',
+//           element: <InvoicePreview />
+//         }
+//       ]
+//     },
+//     {
+//       path: 'account',
+//       element: <AccountPage />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Account />
+//         },
+      
+//       ]
+//     },
+//     {
+//       path: 'product',
+//       element: <ProductPage />,
+//       children: [
+//         {
+//           index: true,
+//           element: <Product />
+//         },
+      
+//       ]
+//     }
+
+//   ]
+// };
+const MainRoutes= {
   path: '/',
-  element: <Dashboard />,
   children: [
     {
-      path: 'dashboard',
+      path: '/',
+      element: <Dashboard />,
+      children: [
+        {
+          index: true,
           element: <DashboardDefault />
-     
-    },
-    {
-      path: 'inventory',
-      element: <InventoryPage />,
-      children: [
-        {
-          index: true,
-          element: <Inventory />
-        },
-      ]
-    },
-    {
-      path: 'supplier',
-      element: <SupplierPage />,
-      children: [
-        {
-          index: true,
-          element: <Supplier />
-        },
-      ]
-    },
-    {
-      path: 'sales',
-      element: <SalesPage />,
-      children: [
-        {
-          index: true,
-          element: <Sales />
         },
         {
-          path: 'newOrder',
-          element: <NewOrder />
+          path: 'dashboard',
+          element: <DashboardDefault />
         },
         {
-          path: 'invoice-preview',
-          element: <InvoicePreview />
+          path: 'inventory',
+          element: <InventoryPage />,
+          children: [
+            {
+              index: true,
+              element: <Inventory />
+            },
+          ]
+        },
+        {
+          path: 'supplier',
+          element: <SupplierPage />,
+          children: [
+            {
+              index: true,
+              element: <Supplier />
+            },
+          ]
+        },
+        {
+          path: 'sales',
+          element: <SalesPage />,
+          children: [
+            {
+              index: true,
+              element: <Sales />
+            },
+            {
+              path: 'newOrder',
+              element: <NewOrder />
+            },
+            {
+              path: 'invoice-preview',
+              element: <InvoicePreview />
+            }
+          ]
+        },
+        {
+          path: 'account',
+          element: <AccountPage />,
+          children: [
+            {
+              index: true,
+              element: <Account />
+            },
+          ]
+        },
+        {
+          path: 'product',
+          element: <ProductPage />,
+          children: [
+            {
+              index: true,
+              element: <Product />
+            },
+          ]
         }
       ]
     },
     {
-      path: 'account',
-      element: <AccountPage />,
+      element: <MinimalLayout />,
       children: [
         {
-          index: true,
-          element: <Account />
+          path: 'login',
+          element: <AuthLogin />
         },
-      
-      ]
-    },
-    {
-      path: 'product',
-      element: <ProductPage />,
-      children: [
         {
-          index: true,
-          element: <Product />
-        },
-      
+          path: 'register',
+          element: <AuthRegister />
+        }
       ]
     }
-
   ]
 };
-
 export default MainRoutes;
