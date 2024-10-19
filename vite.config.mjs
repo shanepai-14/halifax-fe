@@ -7,7 +7,7 @@ import jsconfigPaths from 'vite-jsconfig-paths';
 // ----------------------------------------------------------------------
 
 export default defineConfig({
-  base :"/halifax",
+  base :"/halifax-fe",
   plugins: [react(), jsconfigPaths()],
   // https://github.com/jpuri/react-draft-wysiwyg/issues/1317
   define: {
