@@ -9,7 +9,7 @@ import jsconfigPaths from 'vite-jsconfig-paths';
 export default defineConfig({
   base :"/halifax-fe",
   plugins: [react(), jsconfigPaths()],
-  // https://github.com/jpuri/react-draft-wysiwyg/issues/1317
+  // https://github.com/jpuri/react-draft-wysiwyg/issues/1317//s
   define: {
     global: 'window'
   },
