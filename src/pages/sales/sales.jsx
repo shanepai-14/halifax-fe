@@ -1,80 +1,181 @@
 import React, { useState, useEffect } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  Typography, Container, TablePagination, IconButton, Button, Modal, Box,
-  TextField, Checkbox, FormControlLabel, Radio, RadioGroup, FormControl, FormLabel,
-  Select, MenuItem, InputAdornment
+  Typography, Container, TablePagination, IconButton, Button, Box,
+  TextField, Checkbox, Select, MenuItem, InputAdornment, Collapse, FormControl
 } from '@mui/material';
-import { DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined, SearchOutlined , CalendarOutlined ,ClearOutlined } from '@ant-design/icons';
+import { 
+  DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined, SearchOutlined, 
+  CalendarOutlined, ClearOutlined, DownOutlined, UpOutlined 
+} from '@ant-design/icons';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import CustomerCreationModal from './CustomerCreationModal';
 import { Link as RouterLink } from 'react-router-dom';
-// Updated sample data
+
+// Updated sample data structure with unit price
 const initialSalesData = [
-    { id: 1, invoiceNumber: 'INV-001', customer: 'John Doe', product: 'Tempered Glass', quantity: 150, revenue: 15000, dateOrder: '2024-03-01', dateDelivery: '2024-03-05', customerType: 'quotation/project' },
-    { id: 2, invoiceNumber: 'INV-002', customer: 'Jane Smith', product: 'Aluminum Frames', quantity: 200, revenue: 10000, dateOrder: '2024-03-02', dateDelivery: '2024-03-07', customerType: 'sales-invoice' },
-    { id: 3, invoiceNumber: 'INV-003', customer: 'Bob Johnson', product: 'Glass Shower Doors', quantity: 75, revenue: 22500, dateOrder: '2024-03-03', dateDelivery: '2024-03-10', customerType: 'quotation/project' },
-    { id: 4, invoiceNumber: 'INV-004', customer: 'Alice Brown', product: 'Mirrors', quantity: 100, revenue: 5000, dateOrder: '2024-03-04', dateDelivery: '2024-03-06', customerType: 'sales-invoice' },
-    { id: 5, invoiceNumber: 'INV-005', customer: 'Charlie Davis', product: 'Window Panes', quantity: 300, revenue: 9000, dateOrder: '2024-03-05', dateDelivery: '2024-03-12', customerType: 'quotation/project' },
-    { id: 6, invoiceNumber: 'INV-006', customer: 'Eve Wilson', product: 'Glass Tabletops', quantity: 50, revenue: 7500, dateOrder: '2024-03-06', dateDelivery: '2024-03-09', customerType: 'sales-invoice' },
-    { id: 7, invoiceNumber: 'INV-007', customer: 'Frank Miller', product: 'Aluminum Siding', quantity: 180, revenue: 13500, dateOrder: '2024-03-07', dateDelivery: '2024-03-14', customerType: 'quotation/project' },
-    { id: 8, invoiceNumber: 'INV-008', customer: 'Grace Lee', product: 'Glass Partitions', quantity: 25, revenue: 18750, dateOrder: '2024-03-08', dateDelivery: '2024-03-15', customerType: 'quotation/project' },
-    { id: 9, invoiceNumber: 'INV-009', customer: 'Henry Taylor', product: 'Tempered Glass', quantity: 100, revenue: 10000, dateOrder: '2024-03-09', dateDelivery: '2024-03-11', customerType: 'sales-invoice' },
-    { id: 10, invoiceNumber: 'INV-010', customer: 'Ivy Moore', product: 'Aluminum Frames', quantity: 150, revenue: 7500, dateOrder: '2024-03-10', dateDelivery: '2024-03-13', customerType: 'quotation/project' },
-    { id: 11, invoiceNumber: 'INV-011', customer: 'Jack Robinson', product: 'Glass Shower Doors', quantity: 60, revenue: 18000, dateOrder: '2024-03-11', dateDelivery: '2024-03-18', customerType: 'quotation/project' },
-    { id: 12, invoiceNumber: 'INV-012', customer: 'Karen White', product: 'Mirrors', quantity: 80, revenue: 4000, dateOrder: '2024-03-12', dateDelivery: '2024-03-14', customerType: 'sales-invoice' },
-    { id: 13, invoiceNumber: 'INV-013', customer: 'Liam Harris', product: 'Window Panes', quantity: 250, revenue: 7500, dateOrder: '2024-03-13', dateDelivery: '2024-03-20', customerType: 'quotation/project' },
-    { id: 14, invoiceNumber: 'INV-014', customer: 'Mia Clark', product: 'Glass Tabletops', quantity: 40, revenue: 6000, dateOrder: '2024-03-14', dateDelivery: '2024-03-17', customerType: 'sales-invoice' },
-    { id: 15, invoiceNumber: 'INV-015', customer: 'Noah Lewis', product: 'Aluminum Siding', quantity: 200, revenue: 15000, dateOrder: '2024-03-15', dateDelivery: '2024-03-22', customerType: 'quotation/project' },
-    { id: 16, invoiceNumber: 'INV-016', customer: 'Olivia Walker', product: 'Glass Partitions', quantity: 30, revenue: 22500, dateOrder: '2024-03-16', dateDelivery: '2024-03-23', customerType: 'quotation/project' },
-    { id: 17, invoiceNumber: 'INV-017', customer: 'Peter Hall', product: 'Tempered Glass', quantity: 120, revenue: 12000, dateOrder: '2024-03-17', dateDelivery: '2024-03-19', customerType: 'sales-invoice' },
-    { id: 18, invoiceNumber: 'INV-018', customer: 'Quinn Adams', product: 'Aluminum Frames', quantity: 180, revenue: 9000, dateOrder: '2024-03-18', dateDelivery: '2024-03-21', customerType: 'quotation/project' },
-    { id: 19, invoiceNumber: 'INV-019', customer: 'Rachel Turner', product: 'Glass Shower Doors', quantity: 70, revenue: 21000, dateOrder: '2024-03-19', dateDelivery: '2024-03-26', customerType: 'quotation/project' },
-    { id: 20, invoiceNumber: 'INV-020', customer: 'Samuel Green', product: 'Mirrors', quantity: 90, revenue: 4500, dateOrder: '2024-03-20', dateDelivery: '2024-03-22', customerType: 'sales-invoice' },
-    { id: 21, invoiceNumber: 'INV-021', customer: 'Tara Campbell', product: 'Window Panes', quantity: 280, revenue: 8400, dateOrder: '2024-03-21', dateDelivery: '2024-03-28', customerType: 'quotation/project' },
-    { id: 22, invoiceNumber: 'INV-022', customer: 'Ulysses King', product: 'Glass Tabletops', quantity: 45, revenue: 6750, dateOrder: '2024-03-22', dateDelivery: '2024-03-25', customerType: 'sales-invoice' },
-    { id: 23, invoiceNumber: 'INV-023', customer: 'Victoria Scott', product: 'Aluminum Siding', quantity: 220, revenue: 16500, dateOrder: '2024-03-23', dateDelivery: '2024-03-30', customerType: 'quotation/project' },
-    { id: 24, invoiceNumber: 'INV-024', customer: 'William Baker', product: 'Glass Partitions', quantity: 35, revenue: 26250, dateOrder: '2024-03-24', dateDelivery: '2024-03-31', customerType: 'quotation/project' },
-    { id: 25, invoiceNumber: 'INV-025', customer: 'Xander Morris', product: 'Tempered Glass', quantity: 130, revenue: 13000, dateOrder: '2024-03-25', dateDelivery: '2024-03-27', customerType: 'sales-invoice' },
-    { id: 26, invoiceNumber: 'INV-026', customer: 'Yasmin Reed', product: 'Aluminum Frames', quantity: 190, revenue: 9500, dateOrder: '2024-03-26', dateDelivery: '2024-03-29', customerType: 'quotation/project' },
-    { id: 27, invoiceNumber: 'INV-027', customer: 'Zachary Cook', product: 'Glass Shower Doors', quantity: 80, revenue: 24000, dateOrder: '2024-03-27', dateDelivery: '2024-04-03', customerType: 'quotation/project' },
-    { id: 28, invoiceNumber: 'INV-028', customer: 'Abigail Ward', product: 'Mirrors', quantity: 110, revenue: 5500, dateOrder: '2024-03-28', dateDelivery: '2024-03-30', customerType: 'sales-invoice' },
-    { id: 29, invoiceNumber: 'INV-029', customer: 'Benjamin Ross', product: 'Window Panes', quantity: 320, revenue: 9600, dateOrder: '2024-03-29', dateDelivery: '2024-04-05', customerType: 'quotation/project' },
-    { id: 30, invoiceNumber: 'INV-030', customer: 'Chloe Long', product: 'Glass Tabletops', quantity: 55, revenue: 8250, dateOrder: '2024-03-30', dateDelivery: '2024-04-02', customerType: 'sales-invoice' }
-  ];
-
-
-
+  {
+    id: 1,
+    invoiceNumber: 'INV-001',
+    customer: 'John Doe',
+    dateOrder: '2024-03-01',
+    dateDelivery: '2024-03-05',
+    customerType: 'quotation/project',
+    totalRevenue: 25000,
+    products: [
+      { id: 1, name: 'Tempered Glass', category: 'Glass', quantity: 150, unitPrice: 100, revenue: 15000 },
+      { id: 2, name: 'Aluminum Frames', category: 'Frames', quantity: 200, unitPrice: 50, revenue: 10000 }
+    ]
+  },
+  {
+    id: 2,
+    invoiceNumber: 'INV-002',
+    customer: 'Jane Smith',
+    dateOrder: '2024-03-02',
+    dateDelivery: '2024-03-07',
+    customerType: 'sales-invoice',
+    totalRevenue: 18500,
+    products: [
+      { id: 3, name: 'Shower Enclosure', category: 'Glass', quantity: 5, unitPrice: 2000, revenue: 10000 },
+      { id: 4, name: 'Mirror', category: 'Glass', quantity: 15, unitPrice: 300, revenue: 4500 },
+      { id: 5, name: 'Glass Shelves', category: 'Glass', quantity: 20, unitPrice: 200, revenue: 4000 }
+    ]
+  },
+  {
+    id: 3,
+    invoiceNumber: 'INV-003',
+    customer: 'Acme Corporation',
+    dateOrder: '2024-03-03',
+    dateDelivery: '2024-03-10',
+    customerType: 'quotation/project',
+    totalRevenue: 75000,
+    products: [
+      { id: 6, name: 'Double Glazed Windows', category: 'Windows', quantity: 50, unitPrice: 1000, revenue: 50000 },
+      { id: 7, name: 'Aluminium Door Frames', category: 'Frames', quantity: 25, unitPrice: 800, revenue: 20000 },
+      { id: 8, name: 'Glass Balustrades', category: 'Glass', quantity: 10, unitPrice: 500, revenue: 5000 }
+    ]
+  },
+  {
+    id: 4,
+    invoiceNumber: 'INV-004',
+    customer: 'Bob Johnson',
+    dateOrder: '2024-03-04',
+    dateDelivery: '2024-03-06',
+    customerType: 'sales-invoice',
+    totalRevenue: 3500,
+    products: [
+      { id: 9, name: 'Glass Coffee Table', category: 'Furniture', quantity: 1, unitPrice: 2500, revenue: 2500 },
+      { id: 10, name: 'Glass Vase', category: 'Decor', quantity: 5, unitPrice: 200, revenue: 1000 }
+    ]
+  },
+  {
+    id: 5,
+    invoiceNumber: 'INV-005',
+    customer: 'Global Constructions Ltd.',
+    dateOrder: '2024-03-05',
+    dateDelivery: '2024-03-20',
+    customerType: 'quotation/project',
+    totalRevenue: 150000,
+    products: [
+      { id: 11, name: 'Curtain Wall System', category: 'Glass', quantity: 1, unitPrice: 100000, revenue: 100000 },
+      { id: 12, name: 'Structural Glass Panels', category: 'Glass', quantity: 20, unitPrice: 2500, revenue: 50000 }
+    ]
+  },
+  {
+    id: 6,
+    invoiceNumber: 'INV-006',
+    customer: 'Sarah Williams',
+    dateOrder: '2024-03-06',
+    dateDelivery: '2024-03-08',
+    customerType: 'sales-invoice',
+    totalRevenue: 1200,
+    products: [
+      { id: 13, name: 'Bathroom Mirror', category: 'Glass', quantity: 2, unitPrice: 400, revenue: 800 },
+      { id: 14, name: 'Glass Soap Dispenser', category: 'Accessories', quantity: 4, unitPrice: 100, revenue: 400 }
+    ]
+  },
+  {
+    id: 7,
+    invoiceNumber: 'INV-007',
+    customer: 'Luxury Hotels Inc.',
+    dateOrder: '2024-03-07',
+    dateDelivery: '2024-03-25',
+    customerType: 'quotation/project',
+    totalRevenue: 200000,
+    products: [
+      { id: 15, name: 'Decorative Glass Panels', category: 'Glass', quantity: 30, unitPrice: 3000, revenue: 90000 },
+      { id: 16, name: 'Mirrored Walls', category: 'Glass', quantity: 10, unitPrice: 5000, revenue: 50000 },
+      { id: 17, name: 'Glass Chandeliers', category: 'Lighting', quantity: 15, unitPrice: 4000, revenue: 60000 }
+    ]
+  },
+  {
+    id: 8,
+    invoiceNumber: 'INV-008',
+    customer: 'David Lee',
+    dateOrder: '2024-03-08',
+    dateDelivery: '2024-03-11',
+    customerType: 'sales-invoice',
+    totalRevenue: 5500,
+    products: [
+      { id: 18, name: 'Glass Dining Table', category: 'Furniture', quantity: 1, unitPrice: 3500, revenue: 3500 },
+      { id: 19, name: 'Glass Side Tables', category: 'Furniture', quantity: 2, unitPrice: 1000, revenue: 2000 }
+    ]
+  },
+  {
+    id: 9,
+    invoiceNumber: 'INV-009',
+    customer: 'Modern Offices Co.',
+    dateOrder: '2024-03-09',
+    dateDelivery: '2024-03-18',
+    customerType: 'quotation/project',
+    totalRevenue: 80000,
+    products: [
+      { id: 20, name: 'Glass Partitions', category: 'Glass', quantity: 15, unitPrice: 3000, revenue: 45000 },
+      { id: 21, name: 'Frosted Glass Doors', category: 'Doors', quantity: 10, unitPrice: 2500, revenue: 25000 },
+      { id: 22, name: 'Glass Whiteboards', category: 'Office Supplies', quantity: 20, unitPrice: 500, revenue: 10000 }
+    ]
+  },
+  {
+    id: 10,
+    invoiceNumber: 'INV-010',
+    customer: 'Emily Brown',
+    dateOrder: '2024-03-10',
+    dateDelivery: '2024-03-12',
+    customerType: 'sales-invoice',
+    totalRevenue: 2800,
+    products: [
+      { id: 23, name: 'Glass Picture Frames', category: 'Decor', quantity: 10, unitPrice: 150, revenue: 1500 },
+      { id: 24, name: 'Glass Coasters', category: 'Accessories', quantity: 20, unitPrice: 25, revenue: 500 },
+      { id: 25, name: 'Glass Candle Holders', category: 'Decor', quantity: 8, unitPrice: 100, revenue: 800 }
+    ]
+  }
+];
 
 const HalifaxSalesPage = () => {
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(20);
-    const [salesData, setSalesData] = useState(initialSalesData);
-    const [openModal, setOpenModal] = useState(false);
-    const [customerModal, setCustomerModal] = useState(false);
-    const [newOrder, setNewOrder] = useState({ 
-      invoiceNumber: '', customer: '', product: '', quantity: '', revenue: '', 
-      dateOrder: '', dateDelivery: '', customerType: 'walk-in' 
-    });
-    const [selected, setSelected] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [filterType, setFilterType] = useState('all');
-    const [filteredData, setFilteredData] = useState(salesData);
-    const [dateRange, setDateRange] = useState([null, null]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [salesData, setSalesData] = useState(initialSalesData);
+  const [customerModal, setCustomerModal] = useState(false);
+  const [selected, setSelected] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  const [filteredData, setFilteredData] = useState(salesData);
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [expandedRows, setExpandedRows] = useState({});
 
-    useEffect(() => {
-        const filtered = salesData.filter(item => 
-          (item.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           item.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-           item.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase())) &&
-          (filterType === 'all' || item.customerType === filterType) &&
-          (!dateRange[0] || new Date(item.dateOrder) >= dateRange[0]) &&
-          (!dateRange[1] || new Date(item.dateOrder) <= dateRange[1])
-        );
-        setFilteredData(filtered);
-      }, [searchTerm, filterType, salesData, dateRange]);
+  useEffect(() => {
+    const filtered = salesData.filter(item => 
+      (item.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       item.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       item.products.some(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()))) &&
+      (filterType === 'all' || item.customerType === filterType) &&
+      (!dateRange[0] || new Date(item.dateOrder) >= dateRange[0]) &&
+      (!dateRange[1] || new Date(item.dateOrder) <= dateRange[1])
+    );
+    setFilteredData(filtered);
+  }, [searchTerm, filterType, salesData, dateRange]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -98,14 +199,10 @@ const HalifaxSalesPage = () => {
     console.log('View item', id);
   };
 
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
-  const handleOpenCustomerModal = () =>  setCustomerModal(true);
+  const handleOpenCustomerModal = () => setCustomerModal(true);
   const handleCloseCustomerModal = () => setCustomerModal(false);
   const handleCreateCustomer = (customerData) => {
-    // Handle the new customer data here
     console.log('New customer:', customerData);
-    // You might want to add this to your state or send it to an API
   };
 
   const handleClearFilter = () => {
@@ -113,18 +210,6 @@ const HalifaxSalesPage = () => {
     setFilterType('all');
     setDateRange([null, null]);
     setFilteredData(salesData);
-  }
-
-  const handleNewOrderChange = (event) => {
-    setNewOrder({ ...newOrder, [event.target.name]: event.target.value });
-  };
-
-  const handleAddNewOrder = () => {
-    const newId = Math.max(...salesData.map((item) => item.id)) + 1;
-    const newInvoiceNumber = `INV-₱{String(newId).padStart(3, '0')}`;
-    setSalesData([...salesData, { id: newId, invoiceNumber: newInvoiceNumber, ...newOrder, quantity: parseInt(newOrder.quantity), revenue: parseFloat(newOrder.revenue) }]);
-    setNewOrder({ invoiceNumber: '', customer: '', product: '', quantity: '', revenue: '', dateOrder: '', dateDelivery: '', customerType: 'walk-in' });
-    handleCloseModal();
   };
 
   const handleSelectAllClick = (event) => {
@@ -158,62 +243,62 @@ const HalifaxSalesPage = () => {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const totalSalesInRange = filteredData.reduce((sum, item) => sum + item.revenue, 0);
+  const totalSalesInRange = filteredData.reduce((sum, item) => sum + item.totalRevenue, 0);
+
+  const handleExpandRow = (id) => {
+    setExpandedRows(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
     <Container maxWidth="xxl" sx={{ mt: 0, px: '0!important' }}>
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-      
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <TextField
-          placeholder="Search..."
-          variant="outlined"
-          size="small"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchOutlined />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <FormControl sx={{ ml: 1,mr:1, minWidth: 120 }} size="small">
-          <Select
-            value={filterType}
-            onChange={(e) => setFilterType(e.target.value)}
-          >
-            <MenuItem value="all">All Types</MenuItem>
-            <MenuItem value="sales-invoice">Sales Invoice</MenuItem>
-            <MenuItem value="quotation/project">Quotation/Project</MenuItem>
-          </Select>
-        </FormControl>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateRangePicker
-            startText="Start Date"
-            endText="End Date"
-            value={dateRange}
-            onChange={(newValue) => setDateRange(newValue)}
-            slotProps={{ textField: { InputProps: { endAdornment: <CalendarOutlined />,size: 'small'  } } }}
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <TextField
+            placeholder="Search..."
+            variant="outlined"
+            size="small"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchOutlined />
+                </InputAdornment>
+              ),
+            }}
           />
-        </LocalizationProvider>
-        <Button variant="text" color="error" sx={{ml:1 ,padding:0 ,minWidth:0}}  onClick={handleClearFilter}>
-        <ClearOutlined />
-      </Button>
-
+          <FormControl sx={{ ml: 1, mr: 1, minWidth: 120 }} size="small">
+            <Select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+            >
+              <MenuItem value="all">All Types</MenuItem>
+              <MenuItem value="sales-invoice">Sales Invoice</MenuItem>
+              <MenuItem value="quotation/project">Quotation/Project</MenuItem>
+            </Select>
+          </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateRangePicker
+              startText="Start Date"
+              endText="End Date"
+              value={dateRange}
+              onChange={(newValue) => setDateRange(newValue)}
+              slotProps={{ textField: { InputProps: { endAdornment: <CalendarOutlined />, size: 'small' } } }}
+            />
+          </LocalizationProvider>
+          <Button variant="text" color="error" sx={{ml:1, padding:0, minWidth:0}} onClick={handleClearFilter}>
+            <ClearOutlined />
+          </Button>
+        </Box>
+        <Box>
+          <Button variant="contained" component={RouterLink} to="/app/sales/newOrder" color="error" sx={{mr:1}} startIcon={<PlusOutlined />}>
+            New Order
+          </Button>
+          <Button variant="contained" color="info" startIcon={<PlusOutlined />} onClick={handleOpenCustomerModal}>
+            Add Customer
+          </Button>
+        </Box>
       </Box>
-      <Box>
-      <Button variant="contained" 
-      component={RouterLink}
-      to="/app/sales/newOrder" color="error" sx={{mr:1}} startIcon={<PlusOutlined />} >
-        New Order
-      </Button>
-      <Button variant="contained" color="info" startIcon={<PlusOutlined />} onClick={handleOpenCustomerModal}>
-         Add Customer
-      </Button>
-      </Box>
-    </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -227,9 +312,7 @@ const HalifaxSalesPage = () => {
               </TableCell>
               <TableCell>Invoice Number</TableCell>
               <TableCell>Customer</TableCell>
-              <TableCell>Product</TableCell>
-              <TableCell align="right">Quantity</TableCell>
-              <TableCell align="right">Revenue (₱)</TableCell>
+              <TableCell align="right">Total Revenue (₱)</TableCell>
               <TableCell>Date Order</TableCell>
               <TableCell>Date Delivery</TableCell>
               <TableCell>Sales Type</TableCell>
@@ -239,43 +322,81 @@ const HalifaxSalesPage = () => {
           <TableBody>
             {filteredData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               const isItemSelected = isSelected(row.id);
+              const isExpanded = expandedRows[row.id] || false;
               return (
-                <TableRow
-                  hover
-                  onClick={(event) => handleClick(event, row.id)}
-                  role="checkbox"
-                  aria-checked={isItemSelected}
-                  tabIndex={-1}
-                  key={row.id}
-                  selected={isItemSelected}
-                >
-                  <TableCell padding="checkbox">
-                    <Checkbox checked={isItemSelected} />
-                  </TableCell>
-                  <TableCell>{row.invoiceNumber}</TableCell>
-                  <TableCell>{row.customer}</TableCell>
-                  <TableCell>{row.product}</TableCell>
-                  <TableCell align="right">{row.quantity}</TableCell>
-                  <TableCell align="right">₱{row.revenue.toLocaleString()}</TableCell>
-                  <TableCell>{row.dateOrder}</TableCell>
-                  <TableCell>{row.dateDelivery}</TableCell>
-                  <TableCell>{row.customerType}</TableCell>
-                  <TableCell align="right">
-                    <IconButton onClick={() => handleView(row.id)}>
-                      <EyeOutlined style={{ fontSize: 20 }} />
-                    </IconButton>
-                    <IconButton onClick={() => handleEdit(row.id)}>
-                      <EditOutlined style={{ fontSize: 20 }} />
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete(row.id)}>
-                      <DeleteOutlined style={{ fontSize: 20 }} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
+                <React.Fragment key={row.id}>
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.id)}
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    selected={isItemSelected}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox checked={isItemSelected} />
+                    </TableCell>
+                    <TableCell>{row.invoiceNumber}</TableCell>
+                    <TableCell>{row.customer}</TableCell>
+                    <TableCell align="right">₱{row.totalRevenue.toLocaleString()}</TableCell>
+                    <TableCell>{row.dateOrder}</TableCell>
+                    <TableCell>{row.dateDelivery}</TableCell>
+                    <TableCell>{row.customerType}</TableCell>
+                    <TableCell align="right">
+                      <IconButton onClick={() => handleExpandRow(row.id)}>
+                        {isExpanded ? <UpOutlined /> : <DownOutlined />}
+                      </IconButton>
+                      <IconButton onClick={() => handleView(row.id)}>
+                        <EyeOutlined />
+                      </IconButton>
+                      <IconButton onClick={() => handleEdit(row.id)}>
+                        <EditOutlined />
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(row.id)}>
+                        <DeleteOutlined />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+                      <Collapse in={isExpanded} timeout="auto" unmountOnExit>
+                        <Box sx={{ margin: 1 }}>
+                          <Typography variant="h6" gutterBottom component="div">
+                            Products
+                          </Typography>
+                          <Table size="small" aria-label="purchases">
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>Product Name</TableCell>
+                                <TableCell>Category</TableCell>
+                                <TableCell align="right">Quantity</TableCell>
+                                <TableCell align="right">Unit Price (₱)</TableCell>
+                                <TableCell align="right">Revenue (₱)</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {row.products.map((product) => (
+                                <TableRow key={product.id}>
+                                  <TableCell component="th" scope="row">
+                                    {product.name}
+                                  </TableCell>
+                                  <TableCell>{product.category}</TableCell>
+                                  <TableCell align="right">{product.quantity}</TableCell>
+                                  <TableCell align="right">₱{product.unitPrice.toLocaleString()}</TableCell>
+                                  <TableCell align="right">₱{product.revenue.toLocaleString()}</TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </Box>
+                      </Collapse>
+                    </TableCell>
+                  </TableRow>
+                </React.Fragment>
               );
             })}
             <TableRow>
-            <TableCell colSpan={5} align="right">
+              <TableCell colSpan={3} align="right">
                 <Typography variant="subtitle1">Total Sales in Range:</Typography>
               </TableCell>
               <TableCell align="right">
@@ -301,8 +422,6 @@ const HalifaxSalesPage = () => {
         handleClose={handleCloseCustomerModal}
         handleCreateCustomer={handleCreateCustomer}
       />
-
-
     </Container>
   );
 };

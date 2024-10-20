@@ -10,12 +10,48 @@ import AddProductModal from './addProductModal';
 
 // Sample data
 const initialProductData = [
-  { id: 1, code: 'P001', name: 'Tempered Glass', category: 'Glass' },
-  { id: 2, code: 'P002', name: 'Aluminum Frame', category: 'Metal' },
-  { id: 3, code: 'P003', name: 'Wooden Door', category: 'Wood' },
-  { id: 4, code: 'P004', name: 'Steel Reinforcement', category: 'Metal' },
-  { id: 5, code: 'P005', name: 'Plastic Moldings', category: 'Plastic' },
-];
+    // Glass Category
+    { id: 1, code: 'P001', name: 'Tempered Glass', category: 'Glass' },
+    { id: 2, code: 'P002', name: 'Insulated Glass', category: 'Glass' },
+    { id: 3, code: 'P003', name: 'Laminated Glass', category: 'Glass' },
+    { id: 4, code: 'P004', name: 'Frosted Glass', category: 'Glass' },
+    { id: 5, code: 'P005', name: 'Soundproof Glass', category: 'Glass' },
+  
+    // Aluminum Category
+    { id: 6, code: 'P006', name: 'Aluminum Sheet', category: 'Aluminum' },
+    { id: 7, code: 'P007', name: 'Aluminum Cladding', category: 'Aluminum' },
+    { id: 8, code: 'P008', name: 'Aluminum Bars', category: 'Aluminum' },
+    { id: 9, code: 'P009', name: 'Aluminum Window Frames', category: 'Aluminum' },
+    { id: 10, code: 'P010', name: 'Aluminum Doors', category: 'Aluminum' },
+  
+    // Breezeway Category
+    { id: 11, code: 'P011', name: 'Breezeway Louver Windows', category: 'Breezeway' },
+    { id: 12, code: 'P012', name: 'Breezeway Ventilation Panels', category: 'Breezeway' },
+    { id: 13, code: 'P013', name: 'Breezeway Sunshades', category: 'Breezeway' },
+  
+    // Jalousies Frame Category
+    { id: 14, code: 'P014', name: 'Jalousie Window Frame', category: 'Jalousies Frame' },
+    { id: 15, code: 'P015', name: 'Adjustable Jalousie Frame', category: 'Jalousies Frame' },
+    { id: 16, code: 'P016', name: 'Fixed Jalousie Frame', category: 'Jalousies Frame' },
+  
+    // UPVC Category
+    { id: 17, code: 'P017', name: 'UPVC Window', category: 'UPVC' },
+    { id: 18, code: 'P018', name: 'UPVC Door', category: 'UPVC' },
+    { id: 19, code: 'P019', name: 'UPVC Cladding', category: 'UPVC' },
+    { id: 20, code: 'P020', name: 'UPVC Fascia Board', category: 'UPVC' },
+  
+    // Services Category
+    { id: 21, code: 'S001', name: 'Glass Installation Service', category: 'Services' },
+    { id: 22, code: 'S002', name: 'Aluminum Fabrication Service', category: 'Services' },
+    { id: 23, code: 'S003', name: 'Window Repair Service', category: 'Services' },
+    { id: 24, code: 'S004', name: 'Custom UPVC Design', category: 'Services' },
+  
+    // Other Category
+    { id: 25, code: 'P021', name: 'Silicone Sealant', category: 'Other' },
+    { id: 26, code: 'P022', name: 'Glass Cleaner', category: 'Other' },
+    { id: 27, code: 'P023', name: 'Installation Tools Kit', category: 'Other' }
+  ];
+  
 
 const ProductPage = () => {
   const [page, setPage] = useState(0);
@@ -25,7 +61,7 @@ const ProductPage = () => {
   const [filteredData, setFilteredData] = useState(productData);
   const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
   const [openAddProductModal, setOpenAddProductModal] = useState(false);
-  const [categories, setCategories] = useState(['Glass', 'Metal', 'Wood', 'Plastic']);
+  const [categories, setCategories] = useState(['Glass', 'Aluminum', 'Breezeway', 'Jalousies Frame','UPVC','Services','Other']);
 
   useEffect(() => {
     const filtered = productData.filter(item => 

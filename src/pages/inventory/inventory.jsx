@@ -10,15 +10,48 @@ import AddSupplierModal from './addSupplierModal';
 
 // Sample data
 const initialInventoryData = [
-  { id: 1, code: 'P001', name: 'Tempered Glass', price: 100, quantity: 50, category: 'Glass', supplier: 'GlassCo' },
-  { id: 2, code: 'P002', name: 'Aluminum Frame', price: 50, quantity: 100, category: 'Metal', supplier: 'MetalWorks' },
-  { id: 3, code: 'P003', name: 'Wooden Door', price: 200, quantity: 25, category: 'Wood', supplier: 'WoodCrafters' },
-  { id: 4, code: 'P004', name: 'Steel Reinforcement', price: 150, quantity: 40, category: 'Metal', supplier: 'SteelMasters' },
-  { id: 5, code: 'P005', name: 'Plastic Moldings', price: 20, quantity: 150, category: 'Plastic', supplier: 'PlastiCorp' },
-  { id: 6, code: 'P006', name: 'Glass Fiber', price: 80, quantity: 75, category: 'Glass', supplier: 'FiberTech' },
-  { id: 7, code: 'P007', name: 'Cement', price: 120, quantity: 0, category: 'Construction', supplier: 'BuilderSupplies' },
-  { id: 8, code: 'P008', name: 'Iron Rods', price: 300, quantity: 35, category: 'Metal', supplier: 'MetalWorks' },
-];
+    // Glass Category
+    { id: 1, code: 'P001', name: 'Tempered Glass', price: 100, quantity: 50, category: 'Glass', supplier: 'GlassCo' },
+    { id: 2, code: 'P002', name: 'Insulated Glass', price: 120, quantity: 40, category: 'Glass', supplier: 'GlassMasters' },
+    { id: 3, code: 'P003', name: 'Laminated Glass', price: 130, quantity: 30, category: 'Glass', supplier: 'SafeGlass' },
+    { id: 4, code: 'P004', name: 'Frosted Glass', price: 90, quantity: 60, category: 'Glass', supplier: 'GlassCo' },
+    { id: 5, code: 'P005', name: 'Soundproof Glass', price: 150, quantity: 20, category: 'Glass', supplier: 'SoundTech' },
+  
+    // Aluminum Category
+    { id: 6, code: 'P006', name: 'Aluminum Sheet', price: 80, quantity: 100, category: 'Aluminum', supplier: 'AluMetals' },
+    { id: 7, code: 'P007', name: 'Aluminum Cladding', price: 70, quantity: 50, category: 'Aluminum', supplier: 'CladWorks' },
+    { id: 8, code: 'P008', name: 'Aluminum Bars', price: 60, quantity: 75, category: 'Aluminum', supplier: 'AluSupply' },
+    { id: 9, code: 'P009', name: 'Aluminum Window Frames', price: 200, quantity: 20, category: 'Aluminum', supplier: 'WindowFramesCo' },
+    { id: 10, code: 'P010', name: 'Aluminum Doors', price: 250, quantity: 15, category: 'Aluminum', supplier: 'DoorsCo' },
+  
+    // Breezeway Category
+    { id: 11, code: 'P011', name: 'Breezeway Louver Windows', price: 180, quantity: 10, category: 'Breezeway', supplier: 'BreezewayTech' },
+    { id: 12, code: 'P012', name: 'Breezeway Ventilation Panels', price: 70, quantity: 30, category: 'Breezeway', supplier: 'VentPanelsInc' },
+    { id: 13, code: 'P013', name: 'Breezeway Sunshades', price: 90, quantity: 25, category: 'Breezeway', supplier: 'SunshadeSupply' },
+  
+    // Jalousies Frame Category
+    { id: 14, code: 'P014', name: 'Jalousie Window Frame', price: 120, quantity: 50, category: 'Jalousies Frame', supplier: 'FrameWorks' },
+    { id: 15, code: 'P015', name: 'Adjustable Jalousie Frame', price: 130, quantity: 30, category: 'Jalousies Frame', supplier: 'AdjustFrameTech' },
+    { id: 16, code: 'P016', name: 'Fixed Jalousie Frame', price: 110, quantity: 40, category: 'Jalousies Frame', supplier: 'FixedFrameCo' },
+  
+    // UPVC Category
+    { id: 17, code: 'P017', name: 'UPVC Window', price: 300, quantity: 20, category: 'UPVC', supplier: 'UPVCWindowsInc' },
+    { id: 18, code: 'P018', name: 'UPVC Door', price: 350, quantity: 15, category: 'UPVC', supplier: 'UPVCDoorMasters' },
+    { id: 19, code: 'P019', name: 'UPVC Cladding', price: 100, quantity: 45, category: 'UPVC', supplier: 'CladUPVC' },
+    { id: 20, code: 'P020', name: 'UPVC Fascia Board', price: 80, quantity: 60, category: 'UPVC', supplier: 'FasciaUPVC' },
+  
+    // Services Category
+    { id: 21, code: 'S001', name: 'Glass Installation Service', price: 500, quantity: 0, category: 'Services', supplier: 'GlassInstallers' },
+    { id: 22, code: 'S002', name: 'Aluminum Fabrication Service', price: 700, quantity: 0, category: 'Services', supplier: 'AluFabTech' },
+    { id: 23, code: 'S003', name: 'Window Repair Service', price: 300, quantity: 0, category: 'Services', supplier: 'WindowRepairCo' },
+    { id: 24, code: 'S004', name: 'Custom UPVC Design', price: 1000, quantity: 0, category: 'Services', supplier: 'CustomDesignUPVC' },
+  
+    // Other Category
+    { id: 25, code: 'P021', name: 'Silicone Sealant', price: 25, quantity: 100, category: 'Other', supplier: 'SealantSupply' },
+    { id: 26, code: 'P022', name: 'Glass Cleaner', price: 10, quantity: 200, category: 'Other', supplier: 'CleanersInc' },
+    { id: 27, code: 'P023', name: 'Installation Tools Kit', price: 150, quantity: 20, category: 'Other', supplier: 'ToolKitsCo' }
+  ];
+  
 
 const HalifaxInventoryPage = () => {
   const [page, setPage] = useState(0);
