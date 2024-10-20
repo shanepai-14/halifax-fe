@@ -12,19 +12,19 @@ const dashboard = {
   type: 'group',
   children: [
     {
+      id: 'account',
+      title: 'Account',
+      type: 'item',
+      url: '/app/account',
+      icon: UserOutlined  ,
+      breadcrumbs: false
+    },
+    {
       id: 'dashboard',
       title: 'Dashboard',
       type: 'item',
       url: '/app/dashboard',
       icon: DashboardOutlined,
-      breadcrumbs: false
-    },
-    {
-      id: 'sales',
-      title: 'Sales',
-      type: 'item',
-      url: '/app/sales',
-      icon: ShoppingCartOutlined ,
       breadcrumbs: false
     },
     {
@@ -44,6 +44,14 @@ const dashboard = {
       breadcrumbs: false
     },
     {
+      id: 'sales',
+      title: 'Sales',
+      type: 'item',
+      url: '/app/sales',
+      icon: ShoppingCartOutlined ,
+      breadcrumbs: false
+    },
+    {
       id: 'supplier',
       title: 'Supplier',
       type: 'item',
@@ -51,14 +59,7 @@ const dashboard = {
       icon: AreaChartOutlined ,
       breadcrumbs: false
     },
-    {
-      id: 'account',
-      title: 'Account',
-      type: 'item',
-      url: '/app/account',
-      icon: UserOutlined  ,
-      breadcrumbs: false
-    },
+ 
    
 
   ]
