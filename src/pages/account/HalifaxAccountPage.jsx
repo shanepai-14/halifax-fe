@@ -59,7 +59,7 @@ const HalifaxAccountPage = ({ initialUserData, onSave, onCancel }) => {
 
   return (
     <Container maxWidth="xxl" sx={{ mt: 0 ,p:"0!important" }}>
-      <Paper elevation={3} sx={{ p: 0 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
         <Grid container spacing={3} sx={{p:"0!important"}} alignItems="center">
           <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Avatar 
@@ -80,7 +80,7 @@ const HalifaxAccountPage = ({ initialUserData, onSave, onCancel }) => {
             <Typography variant="subtitle1" color="textSecondary" gutterBottom>
               {userData.email}
             </Typography>
-          {userData &&          
+          {userData.role &&          
           <Box 
           sx={{ 
             display: 'inline-block', 

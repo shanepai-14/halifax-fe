@@ -204,7 +204,7 @@ const NewOrderPage = () => {
       totalPrice,
       invoiceNumber: "INV-"+232323, 
     };
-    navigate('/sales/invoice-preview', { state: { invoiceData } });
+    navigate('/app/sales/invoice-preview', { state: { invoiceData } });
   };
 
   return (
