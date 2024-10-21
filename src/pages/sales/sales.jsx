@@ -8,6 +8,7 @@ import {
   DeleteOutlined, EditOutlined, PlusOutlined, EyeOutlined, SearchOutlined, 
   CalendarOutlined, ClearOutlined, DownOutlined, UpOutlined 
 } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -164,6 +165,7 @@ const HalifaxSalesPage = () => {
   const [filteredData, setFilteredData] = useState(salesData);
   const [dateRange, setDateRange] = useState([null, null]);
   const [expandedRows, setExpandedRows] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const filtered = salesData.filter(item => 
@@ -179,6 +181,43 @@ const HalifaxSalesPage = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const handleSubmitOrder = (values) => {
+
+    const orderItems = [
+      {
+          "id": 2,
+          "code": "P002",
+          "name": "Aluminum Frame",
+          "price": 50,
+          "quantity": 3
+      },
+      {
+          "id": 3,
+          "code": "P003",
+          "name": "Wooden Door",
+          "price": 200,
+          "quantity": 3
+      }
+  ]
+   const totalPrice = 750;
+
+    const invoiceData = {
+      salesType: 'sales-invoice',
+      customer: {
+        "id": 2,
+        "name": "Jane Smith",
+        "phone": "9876543210",
+        "address": "456 Elm St, Othertown, USA"
+    },
+      orderDate: '2024-03-02',
+      deliveryDate: '2024-03-07',
+      orderItems,
+      totalPrice,
+      invoiceNumber: "INV-"+232323, 
+    };
+    navigate('/app/sales/invoice-preview', { state: { invoiceData } });
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -346,7 +385,7 @@ const HalifaxSalesPage = () => {
                       <IconButton onClick={() => handleExpandRow(row.id)}>
                         {isExpanded ? <UpOutlined /> : <DownOutlined />}
                       </IconButton>
-                      <IconButton onClick={() => handleView(row.id)}>
+                      <IconButton onClick={() => handleSubmitOrder()}>
                         <EyeOutlined />
                       </IconButton>
                       <IconButton onClick={() => handleEdit(row.id)}>

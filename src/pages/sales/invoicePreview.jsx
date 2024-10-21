@@ -28,7 +28,7 @@ const InvoicePreview = () => {
   const location = useLocation();
   const invoiceData = location.state?.invoiceData;
   const contentRef = useRef(null);
-
+   console.log(invoiceData);
   const handlePrint = useReactToPrint({
     contentRef,
   });

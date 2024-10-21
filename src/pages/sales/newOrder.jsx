@@ -88,13 +88,8 @@ const NewOrderPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
   const [orderItems, setOrderItems] = useState([]);
-  const [customer, setCustomer] = useState(null);
-  const [orderDate, setOrderDate] = useState(new Date());
-  const [deliveryDate, setDeliveryDate] = useState(addDays(new Date(), 1));
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [customerInfo, setCustomerInfo] = useState({ name: '', phone: '', address: '' });
-  const [salesType, setSalesType] = useState('');
   const navigate = useNavigate();
 
 
@@ -124,23 +119,7 @@ const NewOrderPage = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleCustomerChange = (event, newValue) => {
-    setCustomer(newValue);
-    if (newValue) {
-      setCustomerInfo({
-        name: newValue.name,
-        phone: newValue.phone,
-        address: newValue.address
-      });
-    } else {
-      setCustomerInfo({ name: '', phone: '', address: '' });
-    }
-  };
-  const handleChange = (event) => {
-    const value = event.target.value;
-    setSalesType(value);
-  
-  };
+
 
   const handleAddProduct = (product) => {
     if (product.quantity > 0) {
