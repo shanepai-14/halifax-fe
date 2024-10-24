@@ -139,6 +139,7 @@ const HalifaxInventoryPage = () => {
 
   const categories = [...new Set(inventoryData.map(item => item.category))];
   const suppliers = [...new Set(inventoryData.map(item => item.supplier))];
+  const productName = [...new Set(inventoryData.map(item => item.name))];
 
   return (
     <Container maxWidth="xxl" sx={{ mt: 0, px: '0!important' }}>
@@ -262,6 +263,7 @@ const HalifaxInventoryPage = () => {
         open={openAddItemModal}
         handleClose={handleCloseAddItemModal}
         handleAddItem={handleAddItem}
+        productName={productName}
         categories={categories}
         suppliers={suppliers}
       />

@@ -3,7 +3,7 @@ import {
   Grid, Paper, TextField, Button, Typography, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, TablePagination, Autocomplete, Dialog,
   DialogTitle, DialogContent, DialogActions, IconButton, Box,
-  FormControl, InputLabel, Select, MenuItem 
+  FormControl, InputLabel, Select, MenuItem ,InputAdornment
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -163,9 +163,25 @@ const NewOrderPage = () => {
       }
       return item;
     }).filter(item => item.quantity > 0));
+    
   };
 
-  const totalPrice = orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const handleDiscountChange = (productId, discountValue) => {
+    // Handle empty string or null by setting discount to 0
+    const discount = discountValue === '' ? 0 : Math.min(Math.max(0, parseFloat(discountValue) || 0), 100);
+    setOrderItems(orderItems.map(item =>
+      item.id === productId ? { ...item, discount } : item
+    ));
+  };
+
+  const calculateItemSubtotal = (item) => {
+    const subtotal = item.price * item.quantity;
+    // Ensure discount is a number and handle empty/null values
+    const discountPercentage = parseFloat(item.discount) || 0;
+    const discountAmount = subtotal * (discountPercentage / 100);
+    return subtotal - discountAmount;
+  };
+  const totalPrice = orderItems.reduce((sum, item) => sum + calculateItemSubtotal(item), 0)
 
   const handleSubmitOrder = (values, { setSubmitting }) => {
     if (orderItems.length === 0) {
@@ -342,7 +358,8 @@ const NewOrderPage = () => {
                 <TableRow>
                   <TableCell>Product</TableCell>
                   <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="center">Quantity</TableCell>
+                  <TableCell align="right">Discount (%)</TableCell>
                   <TableCell align="right">Subtotal</TableCell>
                   <TableCell align="right">Actions</TableCell>
                 </TableRow>
@@ -352,7 +369,7 @@ const NewOrderPage = () => {
                   <TableRow key={item.id}>
                     <TableCell>{item.name}</TableCell>
                     <TableCell align="right">₱{item.price}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="right" sx={{ display : 'flex', justifyContent:'center', alignItems:"center"}}>
                       <IconButton size="small" onClick={() => handleQuantityChange(item.id, -1)}>
                         <MinusCircleOutlined />
                       </IconButton>
@@ -369,7 +386,20 @@ const NewOrderPage = () => {
                         <PlusCircleOutlined />
                       </IconButton>
                     </TableCell>
-                    <TableCell align="right">₱{item.price * item.quantity}</TableCell>
+                    <TableCell align="right">
+                            <TextField
+                              value={item.discount || 0}
+                              onChange={(e) => handleDiscountChange(item.id, e.target.value)}
+                              InputProps={{
+                                style: { textAlign: 'right', width: '80px' },
+                                min: 0,
+                                max: 100,
+                                endAdornment: <InputAdornment position="end">%</InputAdornment>,
+                              }}
+                              size="small"
+                            />
+                          </TableCell>
+                      <TableCell align="right">₱{calculateItemSubtotal(item)}</TableCell>
                     <TableCell align="right">
                       <IconButton onClick={() => handleRemoveProduct(item.id)}>
                         <DeleteOutlined />

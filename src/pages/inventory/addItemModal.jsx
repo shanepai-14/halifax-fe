@@ -23,7 +23,7 @@ const style = {
   p: 4,
 };
 
-const AddItemModal = ({ open, handleClose, handleAddItem, categories, suppliers }) => {
+const AddItemModal = ({ open, handleClose, handleAddItem, categories, suppliers , productName }) => {
   const [newItem, setNewItem] = useState({
     code: '',
     name: '',
@@ -82,14 +82,21 @@ const AddItemModal = ({ open, handleClose, handleAddItem, categories, suppliers 
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Product Name"
-                name="name"
-                value={newItem.name}
-                onChange={handleChange}
-                required
-              />
+              <FormControl fullWidth required>
+                <InputLabel>Product Name</InputLabel>
+                <Select
+                  name="name"
+                  value={newItem.name}
+                  onChange={handleChange}
+                  label="Product Name"
+                >
+                  {productName.map((productNames) => (
+                    <MenuItem key={productNames} value={productNames}>
+                      {productNames}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth required>
